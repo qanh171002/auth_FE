@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import Dashboard from "./pages/Dashboard";
 import { ThemeProvider } from "./components/theme-provider";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,14 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route index element={<Navigate to="/dashboard" />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Signin />} />
             </Routes>

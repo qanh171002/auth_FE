@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signIn } from "@/services/api";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/store/hooks";
+import { setCredentials } from "@/store/authSlice";
 
 type FormData = z.infer<typeof signInSchema>;
 
@@ -27,6 +29,7 @@ function Signin() {
   } = useForm<FormData>({
     resolver: zodResolver(signInSchema),
   });
+  const dispatch = useAppDispatch();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = async (data: FormData) => {
@@ -35,6 +38,7 @@ function Signin() {
     try {
       const res = await signIn(data);
       localStorage.setItem("token", res.token);
+      dispatch(setCredentials({ user: res.user, token: res.token }));
       navigate("/dashboard");
     } catch (err: unknown) {
       if (typeof err === "object" && err && "message" in err) {

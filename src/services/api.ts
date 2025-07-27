@@ -26,7 +26,7 @@ export async function signUp({
   email: string;
   password: string;
 }) {
-  return apiFetch("/auth/signup", {
+  return apiFetch("/api/auth/signup", {
     method: "POST",
     body: JSON.stringify({ name, email, password }),
   });
@@ -39,8 +39,14 @@ export async function signIn({
   email: string;
   password: string;
 }) {
-  return apiFetch("/auth/login", {
+  return apiFetch("/api/auth/login", {
     method: "POST",
     body: JSON.stringify({ email, password }),
+  });
+}
+
+export async function getMe() {
+  return apiFetch("/api/me", {
+    method: "GET",
   });
 }
