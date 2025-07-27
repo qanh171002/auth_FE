@@ -31,3 +31,16 @@ export async function signUp({
     body: JSON.stringify({ name, email, password }),
   });
 }
+
+export async function signIn({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
+  return apiFetch("/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+  });
+}
